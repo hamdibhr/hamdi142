@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>creer un compte</title>
+    <link rel="stylesheet" href="ex2.css">
+    <script>
+        function verif() {
+            const name = document.getElementById("name").value;
+            const surname = document.getElementById("surname").value;
+            const date = document.getElementById("date").value;
+            const email = document.getElementById("email").value;
+            if (!name) { alert("Something went wrong! (name)"); return false; }
+            if (!surname) { alert("Something went wrong! (Last name)"); return false; }
+            if (!date) { alert("Something went wrong! (date de naissance)"); return false; }
+            if (!email) { alert("Something went wrong! (L'adresse email)"); return false; }
+            const emailIndex = email.indexOf("@");
+
+            if (emailIndex < 0) {
+                alert("l'adresse email doit contenir un @'");
+                return false;
+            }
+            const identifiant = email.substr(0, emailIndex);
+            alpha(identifiant);
+            if (identifiant.length < 6) {
+                alert("le nom doit etre de longeur  min 6");
+                return false;
+            }
+            if (
+                !(
+                    identifiant[0].toUpperCase() >= "A" ||
+                    identifiant[0].toUpperCase() <= "Z" ||
+                    identifiant[identifiant.length].toUpperCase() >= "A" ||
+                    identifiant[identifiant.length].toUpperCase() <= "Z"
+                )
+            ) {
+                alert("le premier et le dernier caractere doit etre un alphabetique");
+                return false;
+            }
+            if ((email.indexOf(".") < 0) || (email.indexOf("@") < 0)) {
+                alert("l'email doit contenir un point et un @'");
+                return false;
+            }
+            dateAnniversaire = new Date(date);
+            const ch1 = dateAnniversaire.getDate();
+            const indexOfpoint = email.indexOf(".");
+            const ch2 = email.substr(0, indexOfpoint);
+            const ch3 = ch2.slice(0, -1) + "F";
+            console.log('EE', email.length)
+            for (var j = 0; j < email.length; j++) {
+                if (
+                    email[j] === "."
+                ) {
+                    dernierPointIndex = j;
+                }
+            }
+            document.getElementById("results").innerHTML = "votre mot de passe est:" + ch1 + ch2 + ch3 + dernierPointIndex;
+        }
+        function alpha(p) {
+            for (var i = 0; i < p.length; i++) {
+                if (
+                    p[i].toUpperCase() >= "A" ||
+                    p[i].toUpperCase() <= "Z" ||
+                    p[i] >= 0 ||
+                    p[i] <= 9
+                ) {
+                    return true;
+                } else {
+                    alert("le nom doit etre alphanumerique");
+                    return false;
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <form class="wrapper">
+        <h2>Creer un compte</h2>
+        <div>
+            <div>
+                <label for="firstname">First name:</label>
+                <input type="text" id="name" name="firstname" />
+            </div>
+            <div>
+                <label for="surname">secend name:</label>
+                <input type="text" id="surname" name="surname" />
+            </div>
+            <div>
+                <label for="date">date de naissance:</label>
+
+                <input type="date" id="date" name="date" />
+            </div>
+            <div>
+                <label for="addresse">addresse mail:</label>
+
+                <input type="email" id="email" name="addresse" />
+            </div>
+        </div>
+        <p id="results">votre mot de passe est:</p>
+        <center>
+            <button type="button" onclick="verif()">
+                acceder a votre compte
+            </button>
+        </center>
+    </form>
+    <div id="overlay-area"></div>
+</body>
+
+</html>
